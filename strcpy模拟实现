@@ -1,0 +1,27 @@
+#include<stdio.h>
+#include<string.h>
+#include<assert.h>
+
+char* my_strcpy(char* dest, const char* scr)
+{
+	assert(dest);
+	assert(scr);
+	char* ret = dest;
+	//拷贝源字符串到目的地字符串中，包括'\0'
+	while (*dest++ = *scr++)
+	{
+		;
+	}
+	//返回目的空间的起始地址
+	return ret;
+}
+
+int main()
+{
+	char arr1[] = "End decadent life until ---------------------------------";
+	char arr2[] = "YangMengLin appeared beside me";
+	//strcpy(arr1 + 24, arr2);
+	//my_strcpy(arr1 + 24, arr2);
+	printf("%s\n", my_strcpy(arr1 + 24, arr2));
+	return 0;
+}
