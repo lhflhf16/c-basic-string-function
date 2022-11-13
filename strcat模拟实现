@@ -1,0 +1,30 @@
+#include<stdio.h>
+#include<string.h>
+#include<assert.h>
+
+char* my_strcat(char* dest, const char* scr)
+{
+	assert(dest != '\0');
+	assert(scr != '\0');
+	char* ret = dest;
+	//1.在目的地字符串中找到'\0'
+	while (*dest != '\0')
+	{
+		dest++;
+	}
+	//2.追加
+	while (*dest++ = *scr++)
+	{
+		;
+	}
+	return ret;
+}
+
+int main()
+{
+	char arr1[30] = "hello the \0uching ";
+	char arr2[] = "world";
+	//my_strcat(arr1, arr2);
+	printf("%s\n", my_strcat(arr1, arr2));
+	return 0;
+}
