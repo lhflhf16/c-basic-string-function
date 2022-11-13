@@ -1,0 +1,60 @@
+#include<stdio.h>
+#include<assert.h>
+
+unsigned int my_strlen_1(const char* str)
+{
+	assert(str);
+	int count = 0;
+	while (*str++ != '\0')
+	{
+		count++;
+	}
+	return count;
+}
+
+unsigned int my_strlen_2(const char* str)
+{
+	assert(str);
+	const char* star = str;
+	const char* end = str;
+	while (*end != '\0')
+	{
+		end++;
+	}
+	return end - star;
+}
+
+unsigned int my_strlen_3(const char* str)
+{
+
+	if (*str != '\0')
+	{
+		return 1 + my_strlen_3(str + 1);
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+int main()
+{
+	char* p = "abcdef";
+	int len = my_strlen_1(p);
+	printf("%d\n", len);
+	len = my_strlen_2(p);
+	printf("%d\n", len);
+	len = my_strlen_3(p);
+	printf("%d\n", len);
+	//注意到strlen返回值是size_t 就是unsigned int，size_t-size_t依然是无符号数
+	//	if ((strlen("abc") - strlen("abcd")) > 0)
+	//	{
+	//		printf("%u\n", (strlen("abc") - strlen("abcd")));
+	//		printf("hehe\n");
+	//	}
+	//	else
+	//	{
+	//		printf("haha\n");
+	//	}
+	return 0;
+}
