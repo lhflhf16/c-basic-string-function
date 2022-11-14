@@ -1,0 +1,51 @@
+#include<stdio.h>
+#include<string.h>
+#include<assert.h>
+
+char* my_strncpy(char* str1, const char* str2, int n)//自己写的
+{
+	assert(str1 != NULL);
+	assert(str2 != NULL);
+	int i = 0;
+	int len = strlen(str2);
+	for (i = 0; i < n; i++)
+	{
+		//拷贝源字符串内容
+		if (i < len)
+		{
+			str1[i] = str2[i];
+		}
+		//拷贝完源字符串内容后在目的后追加'\0'
+		else
+		{
+			str1[i] = '\0';
+		}
+	}
+	
+	return str1;
+}
+
+char* my_strncpy(char* dest, const char* scr, int n)//vs2013库中的
+{
+	char* star = dest;
+	while (n && (*dest++ = *scr++))//先赋值，再++，所以当指向'\0'，先赋值，就将'\0'拷贝到dest中，++后指向非'\0'，出循环
+	{
+		n--;
+	}
+	if (n)
+	{
+		while (--n)//因为上面已经拷贝了一个'\0'，这里就要少拷贝一个，所以先--，再判断
+		{
+			*dest++ = '\0';//因为上面出while循环后，++使dest指向非'\0'，所以要先赋值
+		}
+	}
+	return star;
+}
+
+int main()
+{
+	char arr1[10] = "abcdefg";
+	char arr2[] = "bit";
+	printf("%s\n", my_strncpy(arr1,arr2,6));
+	return 0;
+}
