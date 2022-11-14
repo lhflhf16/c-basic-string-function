@@ -1,0 +1,56 @@
+#include<stdio.h>
+#include<string.h>
+
+////库
+//char * __cdecl strncat(
+//	char * front,
+//	const char * back,
+//	size_t count
+//	)
+//{
+//	char *start = front;
+//
+//	while (*front++)
+//		;
+//	front--;//找'\0'，因为判断条件后置++，会指向'\0'后一位，需要--
+//
+//	while (count--)//当count!=0则进入循环
+//	if (!(*front++ = *back++))//赋值后不为0，!逻辑反操作为0，则步进入if语句，继续while循环，当count=0，结束；当拷贝到'\0'，!0为，返回结束函数
+//		return(start);
+//
+//	*front = '\0';//当count=0，结束while循环，还需再拷贝一个'\0'
+//	return(start);
+//}
+
+char* my_strncat(char* dest, const char* scr, int num)
+{
+	char* star = dest;
+	//目标字符串先指向'\0'
+	while (*dest != '\0')
+	{
+		dest++;
+	}
+	
+	//num>源串长度，说明将源串中'\0'拷贝过去时，num!=0，但是第二个判断条件为0结束循环
+	//num=源串长度，n=0时 &&后面不再执行，所以'\0'没有被拷过去，但是例题 num=4 中指针却是指向f
+	//num<源串长度，n=0时 &&后面不再执行，所以不再拷贝，但是例题 num=2 中指针却是指向d
+	while (num && (*dest++ = *scr++))
+	{
+		num--;
+	}
+
+	//当num==0时，需要额外追加'\0'，而且就在当前指针的位置
+	if (!num)
+	{
+		*dest = '\0';
+	}
+	return star;
+}
+
+int main()
+{					 //ABCD0
+	char arr1[10] = "a\0cdefg";
+	char arr2[] = "ABCD";
+	my_strncat(arr1, arr2, 6);
+	return 0;
+}
