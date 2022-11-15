@@ -1,0 +1,81 @@
+#include<stdio.h>
+#include<string.h>
+#include<assert.h>
+
+//自己实现
+char* my_strstr_1(const char* str1, const char* str2)
+{
+	assert(str1!=NULL);
+	assert(str2 != NULL);
+	int len = strlen(str2);
+	while (*str1)
+	{
+		//先找到str1中与str2首元素相等的后一个位置,找的过程中str1指向'\0'结束循环
+		while (*str1 && (*str1++ != *str2))
+		{
+			;
+		}
+		//
+		if (!(*str1))
+		{
+			return NULL;
+		}
+		//再比较两字符串（str1前一个字符才是相等）
+		int ret = strncmp(str1 - 1, str2, len);
+		//相等返回str1-1
+		if (!ret)
+		{
+			return (char*)(str1 - 1);
+		}
+	}
+	return NULL;
+}
+
+//老师实现
+char* my_strstr_2(const char* str1, const char* str2)
+{
+	//空字符串是任意字符串的子集
+	if (!*str2)
+	{
+		return (char*)str1;
+	}
+	char* s1;
+	char* s2;
+	char* cur = (char*)str1;
+	while (*cur)
+	{
+		s1 = cur;//str1开始查找的位置
+		s2 = (char*)str2;
+		//str1与str2首元素相等则同时向后对比,向后过程中，当str2指向'\0'说明找到了，当str1指向'\0'则不再继续对比
+		while (*s1 && *s2 && (*s1 == *s2))
+		{
+			s1++;
+			s2++;
+		}
+		if (!*s2)
+		{
+			//在执行时，记得保留str2初始位置，保留str1开始查找处的位置
+			return cur;
+		}
+		//没有相同则str1指向下一个
+		cur++;
+	}
+	return NULL;
+}
+
+int main()
+{
+	char* arr1 = "abbbcde";
+	char* arr2 = "bcd";
+	//char* ret = my_strstr_1(arr1, arr2);
+	char* ret = my_strstr_2(arr1, arr2);
+	if (ret == NULL)
+	{
+		printf("找不到\n");
+	}
+	else
+	{
+		printf("%s\n", ret);
+	}
+	return 0;
+}
