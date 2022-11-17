@@ -1,0 +1,33 @@
+#include<stdio.h>
+#include<string.h>
+#include<assert.h>
+
+void* my_memcpy(void* dest, const void* scr, size_t num)
+{
+	assert(dest != NULL);
+	assert(scr != NULL);
+	void* star = dest;
+	while (num--)
+	{
+		//一个字节一个字节的拷贝，就可以拷贝任意类型的数据
+		*((char*)dest)++ = *((char*)scr)++;
+	}
+	return star;
+}
+
+struct s
+{
+	char name[20];
+	int age;
+};
+
+int main()
+{
+	int arr1[] = { 1, 2, 3, 4, 5 };
+	int arr2[5] = { 0 };
+	struct s arr3[] = { { "杨孟林", 21 }, { "廖海锋", 21 } };
+	struct s arr4[3] = { 0 };
+	my_memcpy(arr2, arr1, sizeof(arr1));
+	my_memcpy(arr4, arr3, sizeof(arr3));
+	return 0;
+}
