@@ -1,0 +1,76 @@
+#include<string.h>
+#include<assert.h>
+
+void* my_memmove_1(void* dest, const void* scr, size_t num)
+{
+	assert(dest != NULL);
+	assert(scr != NULL);
+	void* star = dest;
+	//分两种情况
+	//1.当scr>dest时，因为考虑到重叠的情况，这时最好从左到右拷贝；而不重叠的情况，怎么拷贝都可以
+	if (scr > dest)
+	{
+		while (num--)
+		{
+			*((char*)dest)++ = *((char*)scr)++;
+		}
+	}
+	//2.当scr=<dest时，因为考虑到重叠的情况，这是最好从右到左拷贝；而不重叠的情况，怎么拷贝都可以
+	else
+	{	//											   |
+		//01 00 00 00 02 00 00 00 03 00 00 00 04 00 00 00；
+		//第一个字节是scr；第二个字节是scr+1……；第num个字节是scr+num-1
+		while (num--)
+		{
+			*(((char*)dest) + num) = *(((char*)scr) + num);
+
+		}
+	}
+	return star;
+}
+
+void* my_memmove_2(void* dest, const void* scr, size_t num)
+{
+	assert(dest != NULL);
+	assert(scr != NULL);
+	void* star = dest;
+	//分两种情况
+	//1.dest<scr或者dest>scr+num从左向右
+	if (dest < scr || (char*)dest>((char*)scr+num))
+	{
+		while (num--)
+		{
+			*((char*)dest)++ = *((char*)scr)++;
+		}
+	}
+	//2.scr<dest<scr+num，从右向左拷贝
+	else
+	{
+		while (num--)
+		{
+			*((char*)dest + num) = *((char*)scr + num);
+		}
+	}
+	return star;
+}
+
+void* my_memcpy(void* dest, const void* scr, size_t num)
+{
+	assert(dest != NULL);
+	assert(scr != NULL);
+	void* star = dest;
+	while (num--)
+	{
+		*((char*)dest)++ = *((char*)scr)++;
+	}
+	return star;
+}
+
+int main()
+{
+	int arr1[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	int arr2[20] = { 0 };
+	//my_memcpy(arr2, arr1, sizeof(arr1));
+	my_memmove_2(arr1, arr1+2, 20);
+	return 0;
+}
