@@ -1,0 +1,23 @@
+#include<stdio.h>
+#include<string.h>
+#include<assert.h>
+
+void my_memset(void* ptr, int c, size_t num)
+{
+	assert(ptr != NULL);
+	while (num--)
+	{
+		*(char*)ptr = (char)c;
+		++(char*)ptr;
+	}
+}
+
+int main()
+{
+	char arr1[11] = "";
+	my_memset(arr1, '#', 10);
+	printf("%s\n", arr1);
+	int arr2[10] = { 0 };
+	my_memset(arr2, 11, 10);
+	return 0;
+}
